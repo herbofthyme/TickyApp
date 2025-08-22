@@ -1,0 +1,8 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+.DS_Store
+app/.DS_Store
+app/src/.DS_Store
+
+# Ignore Gradle build output directory
+build
