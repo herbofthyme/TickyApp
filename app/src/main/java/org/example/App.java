@@ -3,14 +3,30 @@
  */
 package org.example;
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+
 public class App extends Application {
+    Window window;
+    static File file;
+
+    static StartScene startScene;
+    static MainScene mainScene;
+
     @Override
     public void start(Stage stage) throws Exception {
+        window = new Window(stage);
+
+        startScene = new StartScene(stage);
+        mainScene = new MainScene(stage);
+
+        window.start();
     }
     public static void main(String[] args) {
+
         launch(args);
     }
 }

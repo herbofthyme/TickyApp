@@ -48,3 +48,18 @@ tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+/*
+tasks {
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+    compileTestJava {
+        options.encoding = "UTF-8"
+    }
+    javadoc {
+        options.encoding = "UTF-8"
+    }
+}
+*/
+
