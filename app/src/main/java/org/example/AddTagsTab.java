@@ -96,7 +96,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   private void deleteTags() {
     //TODO : finish
     ObservableList<String> toRemove = selectionModel.getSelectedItems();
-
+    App.tickyboxing.removeTags(toRemove);
   }
 
   @Override
@@ -114,6 +114,8 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     }
 
     if(event.getSource() == removeTagsButton) {
+      deleteTags();
+      updateTags();
     }
   }
   
@@ -123,7 +125,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
       String[] list = richText.split("(?!\\\\'92)((((\\{? *\\\\\\S+ ?(\\S*})?)+\\\\?)+\\n?)|\\})");
       String fullOfEmpties = String.join("", list);
       fullOfEmpties = fullOfEmpties.replaceAll("\\\\'92", "’");
-      list = fullOfEmpties.split("\\s\\s+");
+      list = fullOfEmpties.split("\\s\\s+|\\\\\\s");
 
       input = String.join("\n", list);
 

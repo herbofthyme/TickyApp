@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.TreeSet;
 
 import javafx.collections.FXCollections;
@@ -8,7 +9,7 @@ import javafx.collections.ObservableList;
 
 public class TickyBoxing {
   //ArrayList<String> tags;
-  TreeSet<String> tags;
+  TreeSet<String> tagSet;
   ArrayList<Prompt> prompts;
   ObservableList<String> tagsList;
 
@@ -17,7 +18,7 @@ public class TickyBoxing {
   private static final String NEWLINE = "\n";
 
   TickyBoxing() {
-    tags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
+    tagSet = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     prompts = new ArrayList<Prompt>();
     tagsList = FXCollections.observableArrayList();
   }
@@ -32,9 +33,18 @@ public class TickyBoxing {
     String[] addedTags = string.split(delimiter);
 
     for (int i=0; i<addedTags.length; i++) {
-      tags.add(addedTags[i]);
+      tagSet.add(addedTags[i]);
     }
-    tagsList = FXCollections.observableArrayList(tags);
+    updateTags();
+  }
+
+  void removeTags(Collection<String> c) {
+    tagSet.removeAll(c);
+    updateTags();
+  }
+
+  void updateTags() {
+    tagsList = FXCollections.observableArrayList(tagSet);
   }
   
 

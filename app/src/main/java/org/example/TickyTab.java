@@ -16,7 +16,7 @@ public class TickyTab {
 
   public Pane layout() {
     updateTags();
-    tagsView.setItems(FXCollections.observableArrayList(App.tickyboxing.tags));
+    tagsView.setItems(FXCollections.observableArrayList(App.tickyboxing.tagSet));
 
     ObservableList<Prompt> promptsList = FXCollections.observableList(App.tickyboxing.prompts);
     ListView<Prompt> promptsPane = new ListView<Prompt>(promptsList);
@@ -27,7 +27,7 @@ public class TickyTab {
   }
 
   public void updateTags() {
-    tagsView.setItems(FXCollections.observableArrayList(App.tickyboxing.tags));
+    tagsView.setItems(App.tickyboxing.tagsList);
   }
   
 }
