@@ -3,17 +3,19 @@ package org.example;
 import java.util.ArrayList;
 
 public class Prompt {
-  public String prompt;
+  private String text;
   ArrayList<String> tags;
   int tagCount = 0;
   String commaTags = "";
 
   Prompt(String string) {
-    prompt = string;
+    text = string;
     tags = new ArrayList<String>();
   }
 
-  void addTag(String tag) {
+  public String getText() { return text; }
+
+  public void addTag(String tag) {
     tags.add(tag);
     tagCount = tags.size();
   }

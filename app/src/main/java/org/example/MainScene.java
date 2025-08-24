@@ -34,8 +34,8 @@ public class MainScene {
     tickyTab = new Tab("Ticky Page", tickyTabLogic.layout());
     tickyTab.setClosable(false);
     tickyTab.setOnSelectionChanged(e -> {
-            tickyTabLogic.updateTags();
-        });
+    tickyTabLogic.updateLists();
+    });
 
     resultsTab = new Tab("Results"  , new Label("Show all cars available"));
     resultsTab.setClosable(false);

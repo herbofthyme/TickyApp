@@ -54,8 +54,8 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     tagsView.setPrefHeight(Window.bounds.getHeight());
     selectionModel = tagsView.getSelectionModel();
     selectionModel.setSelectionMode(SelectionMode.MULTIPLE);
-    //VBox.setMargin(tagsView, new Insets(15));
-    //VBox.setMargin(removeTagsButton, new Insets(15, 0, 30, 0));
+    VBox.setMargin(tagsView, new Insets(15));
+    VBox.setMargin(removeTagsButton, new Insets(15, 0, 30, 0));
 
     VBox tagsPane = new VBox(tagsView, removeTagsButton);
     tagsPane.setAlignment(Pos.CENTER);
@@ -122,14 +122,16 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   private void paste() {
     String richText = App.clipBoard.getRtf();
 
-      String[] list = richText.split("(?!\\\\'92)((((\\{? *\\\\\\S+ ?(\\S*})?)+\\\\?)+\\n?)|\\})");
-      String fullOfEmpties = String.join("", list);
-      fullOfEmpties = fullOfEmpties.replaceAll("\\\\'92", "’");
-      list = fullOfEmpties.split("\\s\\s+|\\\\\\s");
+    if(richText==null) {return;}
 
-      input = String.join("\n", list);
+    String[] list = richText.split("(?!\\\\'92)((((\\{? *\\\\\\S+ ?(\\S*})?)+\\\\?)+\\n?)|\\})");
+    String fullOfEmpties = String.join("", list);
+    fullOfEmpties = fullOfEmpties.replaceAll("\\\\'92", "’");
+    list = fullOfEmpties.split("\\s\\s+|\\\\\\s");
 
-      tagInputLabel.setText(input);
+    input = String.join("\n", list);
+
+    tagInputLabel.setText(input);
   }
 
   public void updateTags() {
