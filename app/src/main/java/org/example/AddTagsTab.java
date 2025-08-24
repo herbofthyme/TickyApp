@@ -38,9 +38,15 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
   
   public Pane layout() {
-    //ObservableList<String> tagsList = FXCollections.observableList(tickyboxing.tags);
-    //tagsList = FXCollections.observableArrayList(App.tickyboxing.tags);
-    //tagsView.setItems(tagsList);
+
+    HBox root = new HBox(5, tagsPane(), inputPane());
+    root.setAlignment(Pos.CENTER);
+    root.setFillHeight(true);
+
+    return root;
+  }
+
+  private Pane tagsPane() {
     updateTags();
     tagsView.setPrefWidth(Window.bounds.getWidth()/2);
     tagsView.setPrefHeight(Window.bounds.getHeight());
@@ -52,7 +58,10 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     VBox tagsPane = new VBox(tagsView, removeTagsButton);
     tagsPane.setAlignment(Pos.CENTER);
 
+    return tagsPane;
+  }
 
+  private Pane inputPane() {
     Label pasteLabel = new Label("Paste Tags Here");
     pasteLabel.setFont(Font.font(Constants.FONT_SIZE_1));
     Label details = new Label("Duplicates will be ignored");
@@ -77,12 +86,9 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     VBox addTags = new VBox(5, pasteLabel, details, scrollPane, buttons);
     addTags.setAlignment(Pos.CENTER);
 
-    HBox root = new HBox(5, tagsPane, addTags);
-    root.setAlignment(Pos.CENTER);
-    root.setFillHeight(true);
-
-    return root;
+    return addTags;
   }
+
 
   private void deleteTags() {
     //TODO : finish

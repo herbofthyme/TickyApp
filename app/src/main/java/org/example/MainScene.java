@@ -12,7 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class MainScene implements EventHandler<ActionEvent> {
+public class MainScene {
   Stage stage;
   Scene scene;
 
