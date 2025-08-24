@@ -6,6 +6,7 @@ package org.example;
 import java.io.File;
 
 import javafx.application.Application;
+import javafx.scene.input.Clipboard;
 import javafx.stage.Stage;
 
 
@@ -16,8 +17,14 @@ public class App extends Application {
     static StartScene startScene;
     static MainScene mainScene;
 
+    static TickyBoxing tickyboxing;
+
+    static Clipboard clipBoard;
+
     @Override
     public void start(Stage stage) throws Exception {
+        clipBoard = Clipboard.getSystemClipboard();
+
         window = new Window(stage);
 
         startScene = new StartScene(stage);
@@ -26,6 +33,8 @@ public class App extends Application {
         window.start();
     }
     public static void main(String[] args) {
+        tickyboxing = new TickyBoxing();
+
 
         launch(args);
     }
