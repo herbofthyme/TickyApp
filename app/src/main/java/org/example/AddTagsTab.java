@@ -37,7 +37,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   }
 
   
-  public Pane tagsTab() {
+  public Pane layout() {
     //ObservableList<String> tagsList = FXCollections.observableList(tickyboxing.tags);
     //tagsList = FXCollections.observableArrayList(App.tickyboxing.tags);
     //tagsView.setItems(tagsList);
@@ -122,7 +122,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   }
 
   public void updateTags() {
-    tagsView.setItems(FXCollections.observableArrayList(App.tickyboxing.tags));
+    tagsView.setItems(App.tickyboxing.tagsList);
   }
 
   private void setupButtons() {

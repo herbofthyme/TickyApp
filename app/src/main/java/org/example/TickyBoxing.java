@@ -3,10 +3,14 @@ package org.example;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class TickyBoxing {
   //ArrayList<String> tags;
   TreeSet<String> tags;
   ArrayList<Prompt> prompts;
+  ObservableList<String> tagsList;
 
   private static final String COMMA = ",";
   private static final String TAB = "\t";
@@ -15,8 +19,8 @@ public class TickyBoxing {
   TickyBoxing() {
     tags = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     prompts = new ArrayList<Prompt>();
+    tagsList = FXCollections.observableArrayList();
   }
-
 
   void addTags(String string) {
     String delimiter;
@@ -30,7 +34,7 @@ public class TickyBoxing {
     for (int i=0; i<addedTags.length; i++) {
       tags.add(addedTags[i]);
     }
-    System.out.println(tags.size());
+    tagsList = FXCollections.observableArrayList(tags);
   }
   
 

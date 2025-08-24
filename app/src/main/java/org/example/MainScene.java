@@ -5,29 +5,22 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class MainScene implements EventHandler<ActionEvent> {
   Stage stage;
   Scene scene;
 
-  ObservableList<String> tagsList;
+  Tab tagsTab, tickyTab, resultsTab;
 
-  ListView<String> tagsViewTicky;
-
-  MultipleSelectionModel<String> selectionModel;
+  AddTagsTab tagTabLogic;
+  TickyTab tickyTabLogic;
   
-  Label tagInputLabel;
-
   public MainScene(Stage stage) {
     initialize();
 
@@ -40,41 +33,27 @@ public class MainScene implements EventHandler<ActionEvent> {
 
   private TabPane tabs() {
     TabPane tabPane = new TabPane();
-    Tab tab1 = new Tab("Tags", new AddTagsTab().tagsTab());
-    tab1.setClosable(false);
-    Tab tab2 = new Tab("Ticky Page"  , tickyTab());
-    tab2.setClosable(false);
-    Tab tab3 = new Tab("Results"  , new Label("Show all cars available"));
-    tab3.setClosable(false);
+    tagsTab = new Tab("Tags", tagTabLogic.layout());
+    tagsTab.setClosable(false);
 
-    tabPane.getTabs().add(tab1);
-    tabPane.getTabs().add(tab2);
-    tabPane.getTabs().add(tab3);
+    tickyTab = new Tab("Ticky Page", tickyTabLogic.layout());
+    tickyTab.setClosable(false);
+    tickyTab.setOnSelectionChanged(e -> {
+            tickyTabLogic.updateTags();
+        });
+
+    resultsTab = new Tab("Results"  , new Label("Show all cars available"));
+    resultsTab.setClosable(false);
+
+    tabPane.getTabs().add(tagsTab);
+    tabPane.getTabs().add(tickyTab);
+    tabPane.getTabs().add(resultsTab);
     
     return tabPane;
   }
-
-  @Override
-  public void handle(ActionEvent event) {
-
-  }
-
-  private HBox tickyTab() {
-    tagsList = FXCollections.observableArrayList(App.tickyboxing.tags);
-    tagsViewTicky.setItems(tagsList);
-
-    ObservableList<Prompt> promptsList = FXCollections.observableList(App.tickyboxing.prompts);
-    ListView<Prompt> promptsPane = new ListView<Prompt>(promptsList);
-
-    HBox root = new HBox(10, tagsViewTicky, promptsPane);
-
-    return root;
-  }
-
-
-  
+ 
   private void initialize() {
-    tagsList = FXCollections.observableArrayList();
-    tagsViewTicky = new ListView<String>(tagsList);      
+    tagTabLogic = new AddTagsTab();
+    tickyTabLogic = new TickyTab();   
     };
 }
