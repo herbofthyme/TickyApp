@@ -46,6 +46,8 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     return root;
   }
 
+
+  //The left side of the screen, where the tabs are shown
   private Pane tagsPane() {
     updateTags();
     tagsView.setPrefWidth(Window.bounds.getWidth()/2);
@@ -61,6 +63,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     return tagsPane;
   }
 
+  //the right side of the screen, where user can paste tags
   private Pane inputPane() {
     Label pasteLabel = new Label("Paste Tags Here");
     pasteLabel.setFont(Font.font(Constants.FONT_SIZE_1));
