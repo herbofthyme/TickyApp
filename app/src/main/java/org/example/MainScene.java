@@ -15,6 +15,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.input.Clipboard;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -36,6 +37,8 @@ public class MainScene implements EventHandler<ActionEvent> {
   Button removeTagsButton, pasteButton, submitButton;
   String input = "";
   ListView<String> tagsViewAdd, tagsViewTicky;
+
+  MultipleSelectionModel<String> selectionModel;
   
   Label tagInputLabel;
 
@@ -89,7 +92,8 @@ public class MainScene implements EventHandler<ActionEvent> {
     tagsViewAdd.setItems(tagsList);
     tagsViewAdd.setPrefWidth(Window.bounds.getWidth()/2);
     tagsViewAdd.setPrefHeight(Window.bounds.getHeight());
-    tagsViewAdd.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    selectionModel = tagsViewAdd.getSelectionModel();
+    selectionModel.setSelectionMode(SelectionMode.MULTIPLE);
     //VBox.setMargin(tagsView, new Insets(15));
     //VBox.setMargin(removeTagsButton, new Insets(15, 0, 30, 0));
 
@@ -175,7 +179,9 @@ public class MainScene implements EventHandler<ActionEvent> {
       tagInputLabel.setText(input);
   }
 
-  private void deleteTag() {
+  private void deleteTags() {
+    //TODO : finish
+    ObservableList<String> toRemove = selectionModel.getSelectedItems();
 
   }
   
