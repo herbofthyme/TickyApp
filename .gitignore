@@ -6,3 +6,4 @@ app/src/.DS_Store
 
 # Ignore Gradle build output directory
 build
+bin
