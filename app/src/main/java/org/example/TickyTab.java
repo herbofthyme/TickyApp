@@ -13,6 +13,8 @@ import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -20,7 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
-public class TickyTab implements EventHandler<ActionEvent> {
+public class TickyTab {
 
   ListView<String> tagsView; 
   ListView<Prompt> promptsView;
@@ -34,23 +36,9 @@ public class TickyTab implements EventHandler<ActionEvent> {
 
 
   public TickyTab() {
-    promptInputArea = new TextField();
-    promptInputArea.setPromptText("Type prompt name/description here");
+    textFieldSetup();
     setupButtons();
     listViewSetup();
-  }
-
-
-  @Override
-  public void handle(ActionEvent event) {
-    if(event.getSource() == submitButton) {
-      addPrompt();
-    }
-    
-    if(event.getSource() == deleteButton) {
-      deletePrompt();
-      updateLists();
-    }
   }
 
   public Pane layout() {
@@ -100,8 +88,8 @@ public class TickyTab implements EventHandler<ActionEvent> {
     String input = promptInputArea.getText();
     App.tickyboxing.addPrompt(input);
     updateLists();
+    promptInputArea.clear();
   }
-
 
   private void deletePrompt() {
     //TODO : finish
@@ -109,19 +97,34 @@ public class TickyTab implements EventHandler<ActionEvent> {
     App.tickyboxing.removePrompts(toRemove);
   }
 
-  private void setupButtons() {
+  private void setupButtons() {  
     deleteButton = new Button("Remove");
     deleteButton.setFont(Font.font(Constants.FONT_SIZE_2));
-    deleteButton.setOnAction(this);
+    deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        deletePrompt();
+        updateLists();
+      }
+    });
 
     submitButton = new Button("Submit");
     submitButton.setFont(Font.font(Constants.FONT_SIZE_2));
-    submitButton.setOnAction(this);
+    submitButton.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent event) {
+        addPrompt();
+      }
+    });
   }
 
   private void listViewSetup() {
     promptsView = new ListView<Prompt>(FXCollections.observableArrayList());
     tagsView = new ListView<String>(FXCollections.observableArrayList());
+
+    KeyEventHandler keyEvent = new KeyEventHandler();
+    tagsView.setOnKeyPressed(keyEvent);
+
 
     promptSelectionModel = promptsView.getSelectionModel();
     tagSelectionModel = tagsView.getSelectionModel();
@@ -138,52 +141,56 @@ public class TickyTab implements EventHandler<ActionEvent> {
       }
     });
 
-
     promptsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
       @Override
       public void handle(MouseEvent event) {
         Prompt prompt = promptsView.getSelectionModel().getSelectedItem();
-        System.out.println("clicked on " + prompt.getText());
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
-          System.out.println("Double clicked");
           String tag = tagSelectionModel.getSelectedItem();
-          if(tag != null) {
-            prompt.addTag(tagsView.getSelectionModel().getSelectedItem());
-            prompt.print();
-          }
+          addTagToPrompt(tag, prompt);
         }
         tagsView.refresh();
       }
     });
 
-
     tagsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent event) {
         String tag = tagsView.getSelectionModel().getSelectedItem();
-        System.out.println("clicked on " + tag);
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
-          System.out.println("Double clicked");
           Prompt prompt = promptSelectionModel.getSelectedItem();
-          if(prompt != null) {
-            if(!prompt.tags.contains(tag)) {
-              prompt.addTag(tag);
-              prompt.print();
-            }
-            else {
-              prompt.removeTag(tag);
-              prompt.print();
-            }
-            tagsView.refresh();
-          }
+          addTagToPrompt(tag, prompt);
         }
       }
     });
   }
 
-  private void updateListColours() {
-    
+  private void textFieldSetup() {
+    promptInputArea = new TextField();
+    promptInputArea.setPromptText("Type prompt name/description here");
+    promptInputArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER) {
+          addPrompt();
+        }
+      }
+
+    });
+  }
+
+  private void addTagToPrompt(String tag, Prompt prompt) {
+    if(prompt != null && tag!= null) {
+      if(!prompt.tags.contains(tag)) {
+        prompt.addTag(tag);
+        prompt.print();
+      }
+      else {
+        prompt.removeTag(tag);
+        prompt.print();
+      }
+      tagsView.refresh();
+    }
   }
 
   private class PromptCellFormat extends ListCell<Prompt> {
@@ -217,6 +224,31 @@ public class TickyTab implements EventHandler<ActionEvent> {
           }
         }
         
+    }
+  }
+
+  private class KeyEventHandler implements EventHandler<KeyEvent> {
+    @Override
+    public void handle(KeyEvent event) {
+      if(event.getEventType() == KeyEvent.KEY_PRESSED) {
+        if(event.getCode() == KeyCode.ENTER || event.getCode() == KeyCode.SPACE) {
+          Prompt prompt = promptSelectionModel.getSelectedItem();
+          String tag = tagSelectionModel.getSelectedItem();
+          if(prompt != null) {
+            if(!prompt.tags.contains(tag)) {
+              prompt.addTag(tag);
+              prompt.print();
+            }
+            else {
+              prompt.removeTag(tag);
+              prompt.print();
+            }
+            tagsView.refresh();
+          }
+
+        }
+      }
+    
     }
   }
 }

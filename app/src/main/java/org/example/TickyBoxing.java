@@ -35,6 +35,7 @@ public class TickyBoxing {
     for (int i=0; i<addedTags.length; i++) {
       tagSet.add(addedTags[i]);
     }
+    tagSet.remove("");
     updateTags();
   }
 
