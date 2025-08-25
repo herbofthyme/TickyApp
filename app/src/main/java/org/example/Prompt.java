@@ -20,6 +20,11 @@ public class Prompt {
     tagCount = tags.size();
   }
 
+  public void removeTag(String tag) {
+    tags.remove(tag);
+    tagCount = tags.size();
+  }
+
   public String updateTags() {
     StringBuilder sb = new StringBuilder();
     for(int i=0; i<tagCount; i++) {
@@ -30,5 +35,13 @@ public class Prompt {
 
     commaTags = sb.toString();
     return commaTags;
+  }
+
+  public String makeCommaString() {
+    return String.join(", ", tags);
+  }
+
+  public void print() {
+    System.out.println(makeCommaString());
   }
 }

@@ -25,6 +25,8 @@ public class TickyTab implements EventHandler<ActionEvent> {
   ListView<String> tagsView; 
   ListView<Prompt> promptsView;
   MultipleSelectionModel<Prompt> promptSelectionModel;
+  MultipleSelectionModel<String> tagSelectionModel;
+
 
   Button submitButton, deleteButton;
 
@@ -119,36 +121,69 @@ public class TickyTab implements EventHandler<ActionEvent> {
 
   private void listViewSetup() {
     promptsView = new ListView<Prompt>(FXCollections.observableArrayList());
+    tagsView = new ListView<String>(FXCollections.observableArrayList());
+
+    promptSelectionModel = promptsView.getSelectionModel();
+    tagSelectionModel = tagsView.getSelectionModel();
+
     promptsView.setCellFactory(new Callback<ListView<Prompt>, ListCell<Prompt>>() {
       @Override public ListCell<Prompt> call(ListView<Prompt> list) {
         return new PromptCellFormat();
       }
     });
+
+    tagsView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+      @Override public ListCell<String> call(ListView<String> list) {
+        return new TagCellFormat();
+      }
+    });
+
+
     promptsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
       @Override
       public void handle(MouseEvent event) {
-        System.out.println("clicked on " + promptsView.getSelectionModel().getSelectedItem().getText());
+        Prompt prompt = promptsView.getSelectionModel().getSelectedItem();
+        System.out.println("clicked on " + prompt.getText());
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
           System.out.println("Double clicked");
-        
+          String tag = tagSelectionModel.getSelectedItem();
+          if(tag != null) {
+            prompt.addTag(tagsView.getSelectionModel().getSelectedItem());
+            prompt.print();
+          }
         }
+        tagsView.refresh();
       }
     });
 
-    promptSelectionModel = promptsView.getSelectionModel();
 
-    tagsView = new ListView<String>(FXCollections.observableArrayList());
     tagsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent event) {
-        System.out.println("clicked on " + tagsView.getSelectionModel().getSelectedItem());
+        String tag = tagsView.getSelectionModel().getSelectedItem();
+        System.out.println("clicked on " + tag);
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
           System.out.println("Double clicked");
-        
+          Prompt prompt = promptSelectionModel.getSelectedItem();
+          if(prompt != null) {
+            if(!prompt.tags.contains(tag)) {
+              prompt.addTag(tag);
+              prompt.print();
+            }
+            else {
+              prompt.removeTag(tag);
+              prompt.print();
+            }
+            tagsView.refresh();
+          }
         }
       }
     });
+  }
+
+  private void updateListColours() {
+    
   }
 
   private class PromptCellFormat extends ListCell<Prompt> {
@@ -159,6 +194,29 @@ public class TickyTab implements EventHandler<ActionEvent> {
         super.updateItem(item, empty);
           
         setText(item == null ? "" : item.getText());
+    }
+  }
+
+  private class TagCellFormat extends ListCell<String> {
+    public TagCellFormat() {    }
+       
+    @Override protected void updateItem(String item, boolean empty) {
+        // calling super here is very important - don't skip this!
+        super.updateItem(item, empty);
+        setText(item);
+        
+        Prompt prompt = promptSelectionModel.getSelectedItem();
+
+        
+        if (prompt != null){
+          if(prompt.tags.contains(item)) {
+            setStyle("-fx-background-color: green; -fx-text-fill: black;");
+          }
+          else {
+            setStyle(null);
+          }
+        }
+        
     }
   }
 }
