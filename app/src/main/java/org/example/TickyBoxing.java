@@ -52,4 +52,8 @@ public class TickyBoxing {
     prompts.add(new Prompt(string));
   }
 
+  void removePrompts(Collection<Prompt> c) {
+    prompts.removeAll(c);
+  }
+
 }

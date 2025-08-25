@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -16,7 +17,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 
@@ -24,10 +24,12 @@ public class TickyTab implements EventHandler<ActionEvent> {
 
   ListView<String> tagsView; 
   ListView<Prompt> promptsView;
+  MultipleSelectionModel<Prompt> promptSelectionModel;
 
   Button submitButton, deleteButton;
 
   TextField promptInputArea;
+
 
   public TickyTab() {
     promptInputArea = new TextField();
@@ -44,7 +46,8 @@ public class TickyTab implements EventHandler<ActionEvent> {
     }
     
     if(event.getSource() == deleteButton) {
-
+      deletePrompt();
+      updateLists();
     }
   }
 
@@ -97,6 +100,13 @@ public class TickyTab implements EventHandler<ActionEvent> {
     updateLists();
   }
 
+
+  private void deletePrompt() {
+    //TODO : finish
+    ObservableList<Prompt> toRemove = promptSelectionModel.getSelectedItems();
+    App.tickyboxing.removePrompts(toRemove);
+  }
+
   private void setupButtons() {
     deleteButton = new Button("Remove");
     deleteButton.setFont(Font.font(Constants.FONT_SIZE_2));
@@ -126,6 +136,7 @@ public class TickyTab implements EventHandler<ActionEvent> {
       }
     });
 
+    promptSelectionModel = promptsView.getSelectionModel();
 
     tagsView = new ListView<String>(FXCollections.observableArrayList());
     tagsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
