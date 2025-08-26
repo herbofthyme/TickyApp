@@ -9,11 +9,28 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
     id("org.openjfx.javafxplugin") version "0.1.0"
+    id("org.beryx.jlink") version "3.1.1"
 }
 
 javafx {
     version = "20.0.2"
     modules("javafx.controls")
+}
+
+jlink {
+    options = listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
+    launcher {
+        name = "Ticky App"
+    }
+    jpackage {
+        if ("mac" in System.getProperty("os.name").lowercase()) {
+            imageOptions = listOf("--icon", "src/main/resources/icon.icns")
+        }
+        else {
+            imageOptions = listOf("--icon", "src/main/resources/icon.icns")
+        }
+        
+    }
 }
 
 
@@ -35,7 +52,7 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(20)
     }
 }
 
@@ -49,17 +66,4 @@ tasks.named<Test>("test") {
     useJUnitPlatform()
 }
 
-/*
-tasks {
-    compileJava {
-        options.encoding = "UTF-8"
-    }
-    compileTestJava {
-        options.encoding = "UTF-8"
-    }
-    javadoc {
-        options.encoding = "UTF-8"
-    }
-}
-*/
 

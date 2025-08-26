@@ -6,6 +6,7 @@ package org.example;
 import java.io.File;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.stage.Stage;
 
@@ -24,6 +25,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         clipBoard = Clipboard.getSystemClipboard();
+
+        /*
+        System.out.println(System.getProperty("user.dir"));
+        File file = new File("/src/main/resources/icon.png");
+        System.out.println(file.toString());
+        */
+
+        Image icon = new Image(App.class.getResourceAsStream("/icon.png"));
+        stage.getIcons().add(icon);
+
 
         window = new Window(stage);
 
