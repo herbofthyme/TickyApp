@@ -1,7 +1,6 @@
 package org.example;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -15,6 +14,7 @@ public class MainScene {
 
   AddTagsTab tagTabLogic;
   TickyTab tickyTabLogic;
+  ResultsTab resultsTabLogic;
   
   public MainScene(Stage stage) {
     initialize();
@@ -38,8 +38,11 @@ public class MainScene {
     tickyTabLogic.updateLists();
     });
 
-    resultsTab = new Tab("Results"  , new Label("Show all cars available"));
+    resultsTab = new Tab("Results"  , resultsTabLogic.layout());
     resultsTab.setClosable(false);
+    resultsTab.setOnSelectionChanged(e -> {
+    resultsTabLogic.updatePrompts();
+    });
 
     tabPane.getTabs().add(tagsTab);
     tabPane.getTabs().add(tickyTab);
@@ -51,5 +54,6 @@ public class MainScene {
   private void initialize() {
     tagTabLogic = new AddTagsTab();
     tickyTabLogic = new TickyTab();   
+    resultsTabLogic = new ResultsTab();
     };
 }

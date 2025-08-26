@@ -54,26 +54,26 @@ public class TickyTab {
 
   private Region tagsPane() {
     updateLists();
-    tagsView.setItems(FXCollections.observableArrayList(App.tickyboxing.tagSet));
-    tagsView.setPrefWidth(Window.bounds.getWidth());
-    HBox.setMargin(tagsView, new Insets(15));
+    tagsView.setPrefWidth(Window.bounds.getWidth()/2);
+    tagsView.setPrefHeight(Window.bounds.getHeight());
+    VBox.setMargin(tagsView, new Insets(15));
 
-
-    return tagsView;
+    return new VBox(tagsView);
   }
 
   private Region promptsPane() {
     ObservableList<Prompt> promptsList = FXCollections.observableList(App.tickyboxing.prompts);
     promptsView.setItems(promptsList);
 
-    VBox.setMargin(promptInputArea, new Insets(15, 15, 30, 15));
-    VBox.setMargin(promptsView, new Insets(15));
+    VBox.setMargin(promptInputArea, new Insets(15, 30, 30, 30));
+    VBox.setMargin(promptsView, new Insets(30, 30, 15, 30));
+    promptsView.setPrefWidth(Window.bounds.getWidth()/2);
+    promptInputArea.setPrefWidth(Window.bounds.getWidth()/2);
 
     HBox buttons = new HBox(5, submitButton, deleteButton);
     buttons.setAlignment(Pos.CENTER);
 
     VBox promptsPane = new VBox(10, promptsView, promptInputArea, buttons);
-    promptsPane.setPrefWidth(Window.bounds.getWidth());
     promptsPane.setAlignment(Pos.CENTER);
 
     return promptsPane;
@@ -131,7 +131,7 @@ public class TickyTab {
 
     promptsView.setCellFactory(new Callback<ListView<Prompt>, ListCell<Prompt>>() {
       @Override public ListCell<Prompt> call(ListView<Prompt> list) {
-        return new PromptCellFormat();
+        return new Prompt.PromptCellFormat();
       }
     });
 
@@ -183,24 +183,11 @@ public class TickyTab {
     if(prompt != null && tag!= null) {
       if(!prompt.tags.contains(tag)) {
         prompt.addTag(tag);
-        prompt.print();
       }
       else {
         prompt.removeTag(tag);
-        prompt.print();
       }
       tagsView.refresh();
-    }
-  }
-
-  private class PromptCellFormat extends ListCell<Prompt> {
-    public PromptCellFormat() {    }
-       
-    @Override protected void updateItem(Prompt item, boolean empty) {
-        // calling super here is very important - don't skip this!
-        super.updateItem(item, empty);
-          
-        setText(item == null ? "" : item.getText());
     }
   }
 
@@ -239,11 +226,9 @@ public class TickyTab {
           if(prompt != null) {
             if(!prompt.tags.contains(tag)) {
               prompt.addTag(tag);
-              prompt.print();
             }
             else {
               prompt.removeTag(tag);
-              prompt.print();
             }
             tagsView.refresh();
           }

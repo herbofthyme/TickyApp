@@ -2,6 +2,8 @@ package org.example;
 
 import java.util.ArrayList;
 
+import javafx.scene.control.ListCell;
+
 public class Prompt {
   private String text;
   ArrayList<String> tags;
@@ -43,5 +45,16 @@ public class Prompt {
 
   public void print() {
     System.out.println(makeCommaString());
+  }
+
+    public static class PromptCellFormat extends ListCell<Prompt> {
+      public PromptCellFormat() {    }
+        
+      @Override protected void updateItem(Prompt item, boolean empty) {
+          // calling super here is very important - don't skip this!
+          super.updateItem(item, empty);
+            
+          setText(item == null ? "" : item.getText());
+      }
   }
 }

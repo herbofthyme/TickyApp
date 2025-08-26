@@ -13,8 +13,6 @@ public class TickyBoxing {
   ArrayList<Prompt> prompts;
   ObservableList<String> tagsList;
 
-  private static final String COMMA = ",";
-  private static final String TAB = "\t";
   private static final String NEWLINE = "\n";
 
   TickyBoxing() {
@@ -24,13 +22,8 @@ public class TickyBoxing {
   }
 
   void addTags(String string) {
-    String delimiter;
 
-    if(string.contains(COMMA)) delimiter = COMMA;
-    else if(string.contains(TAB)) delimiter = TAB;
-    else delimiter = NEWLINE;
-
-    String[] addedTags = string.split(delimiter);
+    String[] addedTags = string.split(NEWLINE);
 
     for (int i=0; i<addedTags.length; i++) {
       tagSet.add(addedTags[i]);
