@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
@@ -20,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
 public class TickyTab {
@@ -65,16 +67,26 @@ public class TickyTab {
     ObservableList<Prompt> promptsList = FXCollections.observableList(App.tickyboxing.prompts);
     promptsView.setItems(promptsList);
 
+    Label promptLabel = new Label("Add prompt names below");
+    promptLabel.setFont(Font.font(Constants.FONT_SIZE_1));
+    Label detailsLabel = new Label("When a prompt is selected: double-click, press enter, or press space to add tags to that prompt.\nYou can also double-click a prompt to add the selected tag.");
+    detailsLabel.setFont(Font.font(Constants.FONT_SIZE_3));
+    detailsLabel.setWrapText(true);
+    detailsLabel.setTextAlignment(TextAlignment.CENTER);
+
     VBox.setMargin(promptInputArea, new Insets(15, 30, 30, 30));
     VBox.setMargin(promptsView, new Insets(30, 30, 15, 30));
     promptsView.setPrefWidth(Window.bounds.getWidth()/2);
     promptInputArea.setPrefWidth(Window.bounds.getWidth()/2);
 
+
     HBox buttons = new HBox(5, submitButton, deleteButton);
     buttons.setAlignment(Pos.CENTER);
 
-    VBox promptsPane = new VBox(10, promptsView, promptInputArea, buttons);
+    VBox promptsPane = new VBox(10, promptLabel, detailsLabel, promptsView, promptInputArea, buttons);
     promptsPane.setAlignment(Pos.CENTER);
+
+    detailsLabel.maxWidthProperty().bind(promptsView.widthProperty());
 
     return promptsPane;
   }
