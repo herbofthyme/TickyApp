@@ -94,7 +94,6 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
 
   private void deleteTags() {
-    //TODO : finish
     ObservableList<String> toRemove = selectionModel.getSelectedItems();
     App.tickyboxing.removeTags(toRemove);
   }

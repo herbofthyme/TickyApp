@@ -104,7 +104,6 @@ public class TickyTab {
   }
 
   private void deletePrompt() {
-    //TODO : finish
     ObservableList<Prompt> toRemove = promptSelectionModel.getSelectedItems();
     App.tickyboxing.removePrompts(toRemove);
   }
