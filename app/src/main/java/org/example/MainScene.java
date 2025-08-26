@@ -24,6 +24,7 @@ public class MainScene {
     BorderPane borderPane = new BorderPane(tabPane);
 
     scene = new Scene(borderPane);
+
   }
 
   private TabPane tabs() {

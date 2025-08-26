@@ -213,11 +213,13 @@ public class TickyTab {
         setText(item);
         
         Prompt prompt = promptSelectionModel.getSelectedItem();
-
-        
+                
         if (prompt != null){
           if(prompt.tags.contains(item)) {
-            setStyle("-fx-background-color: green; -fx-text-fill: black;");
+            setStyle("-fx-background-color: rgb(149, 198, 70); -fx-text-fill: black");
+            if(isSelected()) {
+              setStyle( "-fx-background-color: rgb(12, 141, 120); -fx-text-fill: white");
+            }
           }
           else {
             setStyle(null);
