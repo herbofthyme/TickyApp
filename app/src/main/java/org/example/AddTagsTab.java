@@ -119,14 +119,21 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   }
   
   private void paste() {
+    String[] list;
+
+    if(App.clipBoard.hasRtf()) {
+
     String richText = App.clipBoard.getRtf();
 
-    if(richText==null) {return;}
-
-    String[] list = richText.split("(?!\\\\'92)((((\\{? *\\\\\\S+ ?(\\S*})?)+\\\\?)+\\n?)|\\})");
+    list = richText.split("(?!\\\\'92)((((\\{? *\\\\\\S+ ?(\\S*})?)+\\\\?)+\\n?)|\\})");
     String fullOfEmpties = String.join("", list);
     fullOfEmpties = fullOfEmpties.replaceAll("\\\\'92", "’");
     list = fullOfEmpties.split("\\s\\s+|\\\\\\s");
+    }
+    else if (App.clipBoard.hasString()) {
+      list = App.clipBoard.getString().split("\\s\\s+");
+    }
+    else {return;}
 
     input = String.join("\n", list);
 

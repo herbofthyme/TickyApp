@@ -27,7 +27,7 @@ jlink {
             imageOptions = listOf("--icon", "src/main/resources/icon.icns")
         }
         else {
-            imageOptions = listOf("--icon", "src/main/resources/icon.icns")
+            imageOptions = listOf("--icon", "src/main/resources/icon.ico")
         }
         
     }
