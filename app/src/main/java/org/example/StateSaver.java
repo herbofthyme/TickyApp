@@ -1,14 +1,9 @@
 package org.example;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -64,9 +59,7 @@ public class StateSaver {
     try {
       List<String> lines = Files.readAllLines(file.toPath());
       tags = new ArrayList<String>(lines.subList(lines.indexOf(Constants.TAGS_START) +1, lines.indexOf(Constants.TAGS_END)-1));
-      //List<String> promptsFromFile = lines.subList(lines.indexOf(Constants.PROMPT_START) +1, lines.indexOf(Constants.PROMPT_END)-1);
       
-      //Iterator<String> itr = promptsFromFile.iterator();
       boolean gettingTags = false;
       prompts = new ArrayList<Prompt>();
       Prompt prompt = new Prompt("");
