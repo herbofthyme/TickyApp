@@ -67,6 +67,7 @@ public class StartScene implements EventHandler<ActionEvent> {
     FileChooser fc = new FileChooser();
     FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("Ticky files", "*.ticky");
     fc.setTitle("Select Tickysheet File");
+    fc.getExtensionFilters().add(extension);
     fc.setSelectedExtensionFilter(extension);
     File file = fc.showOpenDialog(stage);
     App.file = file;
