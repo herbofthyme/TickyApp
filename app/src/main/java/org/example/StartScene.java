@@ -1,5 +1,7 @@
 package org.example;
 
+import java.io.File;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -32,14 +34,16 @@ public class StartScene implements EventHandler<ActionEvent> {
 
   @Override
   public void handle(ActionEvent event) {
+
     if(event.getSource() == newButton) {
-      mainScene();
+      App.tickyboxing = new TickyBoxing();
     }
 
     if(event.getSource() == uploadButton) {
-      newButton.setText(fileChooserDialog());
-      mainScene();
+      StateSaver saver = new StateSaver();
+      saver.load(fileChooserDialog());
     }
+    mainScene();
   }
 
   private void setupButtons() {
@@ -60,14 +64,14 @@ public class StartScene implements EventHandler<ActionEvent> {
     scene = new Scene(root);
   }
 
-  private String fileChooserDialog() {
+  private File fileChooserDialog() {
     FileChooser fc = new FileChooser();
-    FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter(".ticky extension", "*.ticky");
+    FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("Ticky files", "*.ticky");
     fc.setTitle("Select Tickysheet File");
     fc.setSelectedExtensionFilter(extension);
-    App.file = fc.showOpenDialog(stage);
-
-    return App.file.getName();
+    File file = fc.showOpenDialog(stage);
+    App.file = file;
+    return file;
   }
 
   private void mainScene() {

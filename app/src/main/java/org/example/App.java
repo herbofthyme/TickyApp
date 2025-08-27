@@ -44,7 +44,7 @@ public class App extends Application {
         window.start();
     }
     public static void main(String[] args) {
-        tickyboxing = new TickyBoxing();
+        //tickyboxing = new TickyBoxing();
 
 
         launch(args);

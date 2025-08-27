@@ -21,6 +21,15 @@ public class TickyBoxing {
     tagsList = FXCollections.observableArrayList();
   }
 
+  TickyBoxing(ArrayList<String> tags, ArrayList<Prompt> prompts) {
+    tagSet = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER); 
+    tagSet.addAll(tags);
+    this.prompts = prompts;
+    tagsList = FXCollections.observableArrayList(tagSet);
+    System.out.println(tagSet.size());
+    System.out.println(prompts.size() + " " + tagsList.size());
+  }
+
   void addTags(String string) {
 
     String[] addedTags = string.split(NEWLINE);

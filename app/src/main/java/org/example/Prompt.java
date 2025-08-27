@@ -6,9 +6,9 @@ import javafx.scene.control.ListCell;
 
 public class Prompt {
   private String text;
-  ArrayList<String> tags;
-  int tagCount = 0;
-  String commaTags = "";
+  private ArrayList<String> tags;
+  private int tagCount = 0;
+  private String commaTags = "";
 
   Prompt(String string) {
     text = string;
@@ -57,4 +57,8 @@ public class Prompt {
           setText(item == null ? "" : item.getText());
       }
   }
+  
+  public ArrayList<String> getTags() {return tags;}
+  public int getCount() {return tagCount;}
+  public String getCommaTags() {return commaTags;}
 }

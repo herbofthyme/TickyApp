@@ -49,7 +49,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
   //The left side of the screen, where the tabs are shown
   private Pane tagsPane() {
-    updateTags();
+    //updateTags();
     tagsView.setPrefWidth(Window.bounds.getWidth()/2);
     tagsView.setPrefHeight(Window.bounds.getHeight());
     selectionModel = tagsView.getSelectionModel();

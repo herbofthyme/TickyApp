@@ -45,7 +45,7 @@ public class ResultsTab implements EventHandler<ActionEvent> {
   }
 
   private Region promptsPane() {
-    updatePrompts();
+    //updatePrompts();
     promptsView.setPrefWidth(Window.bounds.getWidth()/2);
     HBox.setMargin(promptsView, new Insets(15));
     return promptsView;

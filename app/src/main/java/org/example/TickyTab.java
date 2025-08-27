@@ -31,6 +31,8 @@ public class TickyTab {
   MultipleSelectionModel<Prompt> promptSelectionModel;
   MultipleSelectionModel<String> tagSelectionModel;
 
+  private static final String[] ILLEGAL_PROMPTS = {"", " ", Constants.TAGS_END, Constants.TAGS_START, Constants.PROMPT_END, Constants.PROMPT_START, Constants.PROMPT_TAGS_END, Constants.PROMPT_TAGS_START};
+
 
   Button submitButton, deleteButton;
 
@@ -55,7 +57,7 @@ public class TickyTab {
   }
 
   private Region tagsPane() {
-    updateLists();
+    //updateLists();
     tagsView.setPrefWidth(Window.bounds.getWidth()/2);
     tagsView.setPrefHeight(Window.bounds.getHeight());
     VBox.setMargin(tagsView, new Insets(15));
@@ -64,7 +66,7 @@ public class TickyTab {
   }
 
   private Region promptsPane() {
-    ObservableList<Prompt> promptsList = FXCollections.observableList(App.tickyboxing.prompts);
+    ObservableList<Prompt> promptsList = FXCollections.observableArrayList();
     promptsView.setItems(promptsList);
 
     Label promptLabel = new Label("Add prompt names below");
@@ -98,9 +100,18 @@ public class TickyTab {
   
   private void addPrompt() {
     String input = promptInputArea.getText();
-    App.tickyboxing.addPrompt(input);
-    updateLists();
+    if(!contains(ILLEGAL_PROMPTS, input)) {
+      App.tickyboxing.addPrompt(input);
+      updateLists();
+    }
     promptInputArea.clear();
+  }
+
+  private boolean contains(String[] array, String s) {
+    for(int i=0; i<array.length; i++){
+      if(array[i].equals(s)) {return true;}
+    }
+    return false;
   }
 
   private void deletePrompt() {
@@ -192,7 +203,7 @@ public class TickyTab {
 
   private void addTagToPrompt(String tag, Prompt prompt) {
     if(prompt != null && tag!= null) {
-      if(!prompt.tags.contains(tag)) {
+      if(!prompt.getTags().contains(tag)) {
         prompt.addTag(tag);
       }
       else {
@@ -213,7 +224,7 @@ public class TickyTab {
         Prompt prompt = promptSelectionModel.getSelectedItem();
                 
         if (prompt != null){
-          if(prompt.tags.contains(item)) {
+          if(prompt.getTags().contains(item)) {
             setStyle("-fx-background-color: rgb(149, 198, 70); -fx-text-fill: black");
             if(isSelected()) {
               setStyle( "-fx-background-color: rgb(12, 141, 120); -fx-text-fill: white");
@@ -235,7 +246,7 @@ public class TickyTab {
           Prompt prompt = promptSelectionModel.getSelectedItem();
           String tag = tagSelectionModel.getSelectedItem();
           if(prompt != null) {
-            if(!prompt.tags.contains(tag)) {
+            if(!prompt.getTags().contains(tag)) {
               prompt.addTag(tag);
             }
             else {
