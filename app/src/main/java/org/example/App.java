@@ -6,13 +6,15 @@ package org.example;
 import java.io.File;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 
 public class App extends Application {
-    Window window;
+    static Window window;
     static File file;
 
     static StartScene startScene;
@@ -21,10 +23,34 @@ public class App extends Application {
     static TickyBoxing tickyboxing;
 
     static Clipboard clipBoard;
+    static Rectangle2D bounds;
+
+    static Stage primaryStage;
+
+    static boolean saved;
+
 
     @Override
     public void start(Stage stage) throws Exception {
+        primaryStage = stage;
+        setup(primaryStage);
+
+        window.start();
+    }
+    public static void main(String[] args) {
+        
+
+        launch(args);
+    }
+
+    private static void setup(Stage stage) {
         clipBoard = Clipboard.getSystemClipboard();
+        Screen screen = Screen.getPrimary();
+
+        bounds = screen.getVisualBounds();
+        saved = false;
+
+        setTitle();
 
         /*
         System.out.println(System.getProperty("user.dir"));
@@ -40,13 +66,21 @@ public class App extends Application {
 
         startScene = new StartScene(stage);
         mainScene = new MainScene(stage);
+    }
 
+    public static void reset() {
+        setup(primaryStage);
         window.start();
     }
-    public static void main(String[] args) {
-        //tickyboxing = new TickyBoxing();
 
-
-        launch(args);
+    public static void setTitle() {
+        String title;
+        if(file != null) {
+            title = file.getName() + " — " + (saved ? "saved" : " modified");
+        }
+        else {
+            title = "New Tickysheet — modified";
+        }
+        primaryStage.setTitle(title);
     }
 }

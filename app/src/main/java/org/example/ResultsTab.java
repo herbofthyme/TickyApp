@@ -46,7 +46,7 @@ public class ResultsTab implements EventHandler<ActionEvent> {
 
   private Region promptsPane() {
     //updatePrompts();
-    promptsView.setPrefWidth(Window.bounds.getWidth()/2);
+    promptsView.setPrefWidth(App.bounds.getWidth()/2);
     HBox.setMargin(promptsView, new Insets(15));
     return promptsView;
   }
@@ -58,8 +58,8 @@ public class ResultsTab implements EventHandler<ActionEvent> {
     outputLabel.setWrapText(true);
 
     ScrollPane scrollPane = new ScrollPane(outputLabel);
-    scrollPane.setPrefWidth(Window.bounds.getWidth()/2);
-    scrollPane.setPrefHeight(Window.bounds.getHeight()/2);
+    scrollPane.setPrefWidth(App.bounds.getWidth()/2);
+    scrollPane.setPrefHeight(App.bounds.getHeight()/2);
     scrollPane.setPannable(true);
     scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
     scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);

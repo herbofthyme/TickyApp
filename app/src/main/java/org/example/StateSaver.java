@@ -2,6 +2,7 @@ package org.example;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,9 @@ public class StateSaver {
       }
       writer.write(Constants.PROMPT_END + "\n");
       writer.close();
+
+      App.saved = true;
+      App.setTitle();
     }
     catch (Exception e){
       System.out.println(e.getMessage());
@@ -55,11 +59,17 @@ public class StateSaver {
   }
 
 
-  private void read(File file) {
+  private void read(File file) throws IOException {
+    tags = new ArrayList<String>();
+    List<String> lines = Files.readAllLines(file.toPath());
+
+
     try {
-      List<String> lines = Files.readAllLines(file.toPath());
-      tags = new ArrayList<String>(lines.subList(lines.indexOf(Constants.TAGS_START) +1, lines.indexOf(Constants.TAGS_END)-1));
-      
+      tags.addAll(lines.subList(lines.indexOf(Constants.TAGS_START) +1, lines.indexOf(Constants.TAGS_END)-1));
+    }
+    catch (IllegalArgumentException e) {    }
+     
+    //try {
       boolean gettingTags = false;
       prompts = new ArrayList<Prompt>();
       Prompt prompt = new Prompt("");
@@ -83,14 +93,20 @@ public class StateSaver {
           prompt.addTag(tags.get(Integer.parseInt(s)));
         }
       }
-    }
+    /* }
     catch (Exception e) {
+      System.out.println("ERROR " + e.getClass().toString());
       System.out.println(e.getMessage());
-    }
+    }*/
   }
 
-  public void load(File file) {
-    read(file);
-    App.tickyboxing = new TickyBoxing(tags, prompts);
+  public void load(File file)  {
+    try {
+      read(file);
+      App.tickyboxing = new TickyBoxing(tags, prompts);
+      App.saved = true;
+      App.setTitle();
+    }
+    catch (IOException e) {    }
   }
 }

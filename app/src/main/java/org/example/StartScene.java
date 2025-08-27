@@ -19,7 +19,7 @@ public class StartScene implements EventHandler<ActionEvent> {
   Button uploadButton;
 
   Stage stage;
-  private Scene scene;
+  Scene scene;
 
   public StartScene(Stage stage) {
     this.stage = stage;
@@ -40,8 +40,7 @@ public class StartScene implements EventHandler<ActionEvent> {
     }
 
     if(event.getSource() == uploadButton) {
-      StateSaver saver = new StateSaver();
-      saver.load(fileChooserDialog());
+      new StateSaver().load(fileChooserDialog());
     }
     mainScene();
   }

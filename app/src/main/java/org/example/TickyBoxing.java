@@ -26,8 +26,6 @@ public class TickyBoxing {
     tagSet.addAll(tags);
     this.prompts = prompts;
     tagsList = FXCollections.observableArrayList(tagSet);
-    System.out.println(tagSet.size());
-    System.out.println(prompts.size() + " " + tagsList.size());
   }
 
   void addTags(String string) {
@@ -39,11 +37,13 @@ public class TickyBoxing {
     }
     tagSet.remove("");
     updateTags();
+    modified();
   }
 
   void removeTags(Collection<String> c) {
     tagSet.removeAll(c);
     updateTags();
+    modified();
   }
 
   void updateTags() {
@@ -53,10 +53,18 @@ public class TickyBoxing {
 
   void addPrompt(String string) {
     prompts.add(new Prompt(string));
+    modified();
   }
 
   void removePrompts(Collection<Prompt> c) {
     prompts.removeAll(c);
+    modified();
+  }
+
+
+  private void modified() {
+    App.saved = false;
+    App.setTitle();
   }
 
 }

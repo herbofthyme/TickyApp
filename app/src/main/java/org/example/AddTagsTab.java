@@ -50,8 +50,8 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   //The left side of the screen, where the tabs are shown
   private Pane tagsPane() {
     //updateTags();
-    tagsView.setPrefWidth(Window.bounds.getWidth()/2);
-    tagsView.setPrefHeight(Window.bounds.getHeight());
+    tagsView.setPrefWidth(App.bounds.getWidth()/2);
+    tagsView.setPrefHeight(App.bounds.getHeight());
     selectionModel = tagsView.getSelectionModel();
     selectionModel.setSelectionMode(SelectionMode.MULTIPLE);
     VBox.setMargin(tagsView, new Insets(15));
@@ -73,8 +73,8 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     tagInputLabel = new Label(input);
 
     ScrollPane scrollPane = new ScrollPane(tagInputLabel);
-    scrollPane.setPrefWidth(Window.bounds.getWidth()/2);
-    scrollPane.setPrefHeight(Window.bounds.getHeight()/2);
+    scrollPane.setPrefWidth(App.bounds.getWidth()/2);
+    scrollPane.setPrefHeight(App.bounds.getHeight()/2);
     scrollPane.setPannable(true);
     scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 

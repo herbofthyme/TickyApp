@@ -1,33 +1,18 @@
 package org.example;
 
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Window {
 
-  Stage stage;
+  private Stage stage;
 
-  Scene firstScene;
+  private Scene firstScene;
 
-  static Rectangle2D bounds;
 
 
   public Window(Stage stage) {
-    Screen screen = Screen.getPrimary();
-    bounds = screen.getVisualBounds();
-
-    
     this.stage = stage;    
-
-    stage.setScene(firstScene);
-
-    stage.setX(bounds.getMinX());
-    stage.setY(bounds.getMinY());
-    stage.setWidth(bounds.getWidth());
-    stage.setHeight(bounds.getHeight());
-    stage.show();
   }
 
   public void start() {
@@ -35,10 +20,12 @@ public class Window {
 
     stage.setScene(firstScene);
 
-    stage.setX(bounds.getMinX());
-    stage.setY(bounds.getMinY());
-    stage.setWidth(bounds.getWidth());
-    stage.setHeight(bounds.getHeight());
+    stage.setX(App.bounds.getMinX());
+    stage.setY(App.bounds.getMinY());
+    stage.setWidth(App.bounds.getWidth());
+    stage.setHeight(App.bounds.getHeight());
     stage.show();
   }
+
+  public Stage getStage() {return stage;}
 }

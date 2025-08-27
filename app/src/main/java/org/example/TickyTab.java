@@ -58,8 +58,8 @@ public class TickyTab {
 
   private Region tagsPane() {
     //updateLists();
-    tagsView.setPrefWidth(Window.bounds.getWidth()/2);
-    tagsView.setPrefHeight(Window.bounds.getHeight());
+    tagsView.setPrefWidth(App.bounds.getWidth()/2);
+    tagsView.setPrefHeight(App.bounds.getHeight());
     VBox.setMargin(tagsView, new Insets(15));
 
     return new VBox(tagsView);
@@ -78,8 +78,8 @@ public class TickyTab {
 
     VBox.setMargin(promptInputArea, new Insets(15, 30, 30, 30));
     VBox.setMargin(promptsView, new Insets(30, 30, 15, 30));
-    promptsView.setPrefWidth(Window.bounds.getWidth()/2);
-    promptInputArea.setPrefWidth(Window.bounds.getWidth()/2);
+    promptsView.setPrefWidth(App.bounds.getWidth()/2);
+    promptInputArea.setPrefWidth(App.bounds.getWidth()/2);
 
 
     HBox buttons = new HBox(5, submitButton, deleteButton);

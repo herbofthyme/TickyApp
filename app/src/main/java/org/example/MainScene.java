@@ -4,13 +4,13 @@ import java.io.File;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -21,7 +21,8 @@ public class MainScene {
 
   Tab tagsTab, tickyTab, resultsTab;
 
-  Button saveButton;
+  Button saveButton, mainMenuButton;
+  HBox buttons;
 
   AddTagsTab tagTabLogic;
   TickyTab tickyTabLogic;
@@ -29,7 +30,6 @@ public class MainScene {
   
   public MainScene(Stage stage) {
     initialize();
-    setupButton();
 
     TabPane tabPane = tabs();
 
@@ -37,25 +37,40 @@ public class MainScene {
     tabPane.setTabMaxHeight(25);
     tabPane.setTabMinHeight(25);
     
-    StackPane.setMargin(saveButton, new Insets(tabPane.getTabMinHeight() + 10, 10, 10, 10));
+    //AnchorPane.setMargin(buttons, new Insets(tabPane.getTabMinHeight() + 10, 10, 10, 10));
+
+    AnchorPane.setTopAnchor(tabPane, 0.0);
+    AnchorPane.setRightAnchor(tabPane, 0.0);
+    AnchorPane.setLeftAnchor(tabPane, 0.0);
+    AnchorPane.setBottomAnchor(tabPane, 0.0);
 
 
-    StackPane borderPane = new StackPane(tabPane, saveButton);
+    AnchorPane.setTopAnchor(buttons, tabPane.getTabMinHeight() + 10);
+    AnchorPane.setRightAnchor(buttons, 10.0);
 
-    scene = new Scene(borderPane);
+
+
+    AnchorPane root = new AnchorPane(tabPane, buttons);
+
+    scene = new Scene(root);
 
   }
 
-  private void setupButton() {
+  private void setupButtons() {
     EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent e) {
-        StateSaver saver = new StateSaver(App.tickyboxing.tagSet, App.tickyboxing.prompts);
-        if(App.file == null) {
-          saver.save(fileSaveDialog());
+        if(e.getSource() == saveButton) {
+          StateSaver saver = new StateSaver(App.tickyboxing.tagSet, App.tickyboxing.prompts);
+          if(App.file == null) {
+            saver.save(fileSaveDialog());
+          }
+          else {
+            saver.save(App.file);
+          }
         }
-        else {
-          saver.save(App.file);
+        if(e.getSource() == mainMenuButton) {
+          startScene();
         }
       }
       
@@ -64,7 +79,16 @@ public class MainScene {
     saveButton = new Button("Save");
     saveButton.setOnAction(handler);
     saveButton.setFont(Font.font(Constants.FONT_SIZE_2));
-    StackPane.setAlignment(saveButton, Pos.TOP_RIGHT);
+    mainMenuButton = new Button("Exit");
+    mainMenuButton.setOnAction(handler);
+    mainMenuButton.setFont(Font.font(Constants.FONT_SIZE_2));
+
+    buttons = new HBox(10,mainMenuButton, saveButton);
+    buttons.setMaxHeight(saveButton.getPrefHeight());
+
+    //StackPane.setAlignment(buttons, Pos.TOP_RIGHT);
+    buttons.setAlignment(Pos.TOP_RIGHT);
+
   }
 
   private File fileSaveDialog() {
@@ -106,5 +130,11 @@ public class MainScene {
     tagTabLogic = new AddTagsTab();
     tickyTabLogic = new TickyTab();   
     resultsTabLogic = new ResultsTab();
-    };
+    setupButtons();
+
+  };
+
+  private void startScene() {
+    App.reset();
+  }
 }
