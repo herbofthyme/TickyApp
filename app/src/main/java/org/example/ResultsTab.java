@@ -86,7 +86,7 @@ public class ResultsTab implements EventHandler<ActionEvent> {
 
 
   public void updatePrompts() {
-    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.prompts));
+    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.getPrompts()));
   }
 
   private void copy() {

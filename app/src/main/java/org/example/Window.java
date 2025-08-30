@@ -19,11 +19,12 @@ public class Window {
 
   public Window(Stage stage) {
     this.stage = stage; 
+    tickyBoxing = new TickyBoxing(this);
+
     start();
   }
 
   public void start() {
-    tickyBoxing = new TickyBoxing(this);
     startScene = new StartScene(this);
     mainScene = new MainScene(this);
 

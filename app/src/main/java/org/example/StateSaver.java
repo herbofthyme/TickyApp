@@ -21,25 +21,25 @@ public class StateSaver {
 
   StateSaver(Window window, TreeSet<String> tagset, ArrayList<Prompt> promptList) {
     this(window);
+    System.out.println("tags " + tagset.size() + " prompts " + promptList.size());
     if(tagset != null && promptList != null) {
       tags = new ArrayList<String>(tagset);
       this.prompts = promptList;
     }
   }
   
-  public void save() {
-    save(window.getFile());
-  }
-
+  
   public void save(File file) {
     try {
-      FileWriter writer = new FileWriter(window.getFile());
+      FileWriter writer = new FileWriter(file);
+      System.out.println("tags" + tags.size());
       
       //OutputStream out = new FileOutputStream(file); 
       //Writer writer = new OutputStreamWriter(out,"UTF-8");
       writer.write(Constants.TAGS_START + "\n");
       for(int i=0; i<tags.size(); i++) {
         writer.write(tags.get(i) + "\n");
+        
       }
       writer.write(Constants.TAGS_END + "\n");
 
@@ -75,7 +75,7 @@ public class StateSaver {
     try {
       tags.addAll(lines.subList(lines.indexOf(Constants.TAGS_START) +1, lines.indexOf(Constants.TAGS_END)-1));
     }
-    catch (IllegalArgumentException e) {    }
+    catch (IllegalArgumentException e) { System.out.println(e.getMessage());}
      
     //try {
       boolean gettingTags = false;
@@ -83,6 +83,7 @@ public class StateSaver {
       Prompt prompt = new Prompt("");
       for (int i=lines.indexOf(Constants.PROMPT_START) +1; i<lines.indexOf(Constants.PROMPT_END); i++) {
         String s = lines.get(i);
+        System.out.println(s);
         if(s.equals(Constants.PROMPT_TAGS_START)) {
           gettingTags = true;
           continue;
@@ -111,7 +112,7 @@ public class StateSaver {
   public void load(File file)  {
     try {
       read(file);
-      window.setTicky(new TickyBoxing(window, tags, prompts));
+      //window.setTicky(new TickyBoxing(window, tags, prompts));
       window.setSaved(true);
       window.setTitle();
     }

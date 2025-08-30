@@ -144,7 +144,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   }
 
   public void updateTags() {
-    tagsView.setItems(tickyboxing.tagsList);
+    tagsView.setItems(tickyboxing.getObservableList());
   }
 
   private void setupButtons() {

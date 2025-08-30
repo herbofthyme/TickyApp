@@ -9,10 +9,10 @@ import javafx.collections.ObservableList;
 
 public class TickyBoxing {
   //ArrayList<String> tags;
-  TreeSet<String> tagSet;
-  ArrayList<Prompt> prompts;
-  ObservableList<String> tagsList;
-  Window window;
+  private TreeSet<String> tagSet;
+  private ArrayList<Prompt> prompts;
+  private ObservableList<String> tagsList;
+  private Window window;
 
   private static final String NEWLINE = "\n";
 
@@ -39,6 +39,7 @@ public class TickyBoxing {
       tagSet.add(addedTags[i]);
     }
     tagSet.remove("");
+    System.out.println("tags " + tagSet.size());
     updateTags();
     modified();
   }
@@ -69,5 +70,11 @@ public class TickyBoxing {
     window.setSaved(false);;
     window.setTitle();
   }
+
+  public TreeSet<String> getTags() {return tagSet;}
+
+  public ArrayList<Prompt> getPrompts() {return prompts;}
+
+  public ObservableList<String> getObservableList() {return tagsList;}
 
 }

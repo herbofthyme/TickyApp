@@ -97,8 +97,8 @@ public class TickyTab {
   }
 
   public void updateLists() {
-    tagsView.setItems(tickyboxing.tagsList);
-    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.prompts));
+    tagsView.setItems(tickyboxing.getObservableList());
+    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.getPrompts()));
   }
   
   private void addPrompt() {

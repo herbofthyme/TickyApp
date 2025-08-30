@@ -19,6 +19,7 @@ public class MainScene {
   Stage stage;
   Window window;
   Scene scene;
+  TickyBoxing ticky;
 
   Tab tagsTab, tickyTab, resultsTab;
 
@@ -31,6 +32,7 @@ public class MainScene {
   
   public MainScene(Window window) {
     this.window = window;
+    this.ticky = window.getTicky();
     initialize();
 
     TabPane tabPane = tabs();
@@ -63,13 +65,13 @@ public class MainScene {
       @Override
       public void handle(ActionEvent e) {
         if(e.getSource() == saveButton) {
-          StateSaver saver = new StateSaver(window, window.getTicky().tagSet, window.getTicky().prompts);
+          System.out.println("tags " + ticky.getTags().size() + " prompts " + ticky.getPrompts().size());
+          StateSaver saver = new StateSaver(window, ticky.getTags(), ticky.getPrompts());
           if(window.getFile() == null) {
-            saver.save(fileSaveDialog());
+            fileSaveDialog();
           }
-          else {
-            saver.save();
-          }
+          saver.save(window.getFile());
+          
         }
         if(e.getSource() == mainMenuButton) {
           startScene();
@@ -100,7 +102,7 @@ public class MainScene {
 
   }
 
-  private File fileSaveDialog() {
+  private void fileSaveDialog() {
     FileChooser fc = new FileChooser();
     FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("Ticky files", "*.ticky");
     fc.setTitle("Where do you want to save this file?");
@@ -108,7 +110,7 @@ public class MainScene {
     fc.setSelectedExtensionFilter(extension);
     File file = fc.showSaveDialog(stage);
     window.setFile(file);
-    return file;
+    //return file;
   }
 
   private TabPane tabs() {
