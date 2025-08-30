@@ -61,6 +61,7 @@ public class App extends Application {
         Image icon = new Image(App.class.getResourceAsStream("/icon.png"));
         stage.getIcons().add(icon);
 
+        file = null;
 
         window = new Window(stage);
 
