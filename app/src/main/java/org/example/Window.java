@@ -18,10 +18,10 @@ public class Window {
 
 
   public Window(Stage stage) {
-    this.stage = stage;    
+    this.stage = stage; 
+    tickyBoxing = new TickyBoxing(this);
     startScene = new StartScene(this);
     mainScene = new MainScene(this);
-    tickyBoxing = new TickyBoxing(this);
 
     setTitle();
   }
