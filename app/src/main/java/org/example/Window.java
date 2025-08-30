@@ -2,7 +2,6 @@ package org.example;
 
 import java.io.File;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Window {

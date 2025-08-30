@@ -3,7 +3,7 @@
  */
 package org.example;
 
-import java.io.File;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
@@ -14,19 +14,21 @@ import javafx.stage.Stage;
 
 
 public class App extends Application {
-    static Window window;
+    static Window primaryWindow;
 
     static Clipboard clipBoard;
     static Rectangle2D bounds;
 
     static Stage primaryStage;
 
+    static ArrayList<Window> windows;
+
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         setup(primaryStage);
 
-        window.start();
+        primaryWindow.start();
     }
     public static void main(String[] args) {
         launch(args);
@@ -46,13 +48,24 @@ public class App extends Application {
         Image icon = new Image(App.class.getResourceAsStream("/icon.png"));
         stage.getIcons().add(icon);
 
-        window = new Window(stage);
+        primaryWindow = new Window(stage);
     }
 
     public static void reset() {
         setup(primaryStage);
-        window.start();
+        primaryWindow.start();
     }
+
+
+    public static void newWindow() {
+        if(windows == null) {
+            windows = new ArrayList<Window>();
+            windows.add(primaryWindow);
+        }
+
+        windows.add(new Window(new Stage()));
+    }
+
 
 
 }

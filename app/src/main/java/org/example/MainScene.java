@@ -22,7 +22,7 @@ public class MainScene {
 
   Tab tagsTab, tickyTab, resultsTab;
 
-  Button saveButton, mainMenuButton;
+  Button newWindowButton, saveButton, mainMenuButton;
   HBox buttons;
 
   AddTagsTab tagTabLogic;
@@ -74,6 +74,9 @@ public class MainScene {
         if(e.getSource() == mainMenuButton) {
           startScene();
         }
+        if(e.getSource() == newWindowButton) {
+
+        }
       }
       
     };
@@ -84,8 +87,12 @@ public class MainScene {
     mainMenuButton = new Button("Exit");
     mainMenuButton.setOnAction(handler);
     mainMenuButton.setFont(Font.font(Constants.FONT_SIZE_2));
+    newWindowButton = new Button("New Window");
+    newWindowButton.setOnAction(handler);
+    newWindowButton.setFont(Font.font(Constants.FONT_SIZE_2));
 
-    buttons = new HBox(10,mainMenuButton, saveButton);
+
+    buttons = new HBox(10,newWindowButton, mainMenuButton, saveButton);
     buttons.setMaxHeight(saveButton.getPrefHeight());
 
     //StackPane.setAlignment(buttons, Pos.TOP_RIGHT);
