@@ -28,10 +28,13 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
   Label tagInputLabel;
 
+  TickyBoxing tickyboxing;
+
 
   MultipleSelectionModel<String> selectionModel;
 
-  public AddTagsTab() {
+  public AddTagsTab(Window window) {
+    tickyboxing = window.getTicky();
     tagsView = new ListView<String>(FXCollections.observableArrayList());
     setupButtons();
   }
@@ -95,7 +98,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
   private void deleteTags() {
     ObservableList<String> toRemove = selectionModel.getSelectedItems();
-    App.tickyboxing.removeTags(toRemove);
+    tickyboxing.removeTags(toRemove);
   }
 
   @Override
@@ -105,7 +108,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     }
 
     if(event.getSource() == submitButton) {
-      App.tickyboxing.addTags(input);
+      tickyboxing.addTags(input);
       //tagsList = FXCollections.observableArrayList(App.tickyboxing.tags);
       //tagsView.setItems(tagsList);
       updateTags();
@@ -141,7 +144,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   }
 
   public void updateTags() {
-    tagsView.setItems(App.tickyboxing.tagsList);
+    tagsView.setItems(tickyboxing.tagsList);
   }
 
   private void setupButtons() {

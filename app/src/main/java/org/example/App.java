@@ -15,20 +15,11 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     static Window window;
-    static File file;
-
-    static StartScene startScene;
-    static MainScene mainScene;
-
-    static TickyBoxing tickyboxing;
 
     static Clipboard clipBoard;
     static Rectangle2D bounds;
 
     static Stage primaryStage;
-
-    static boolean saved;
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -38,8 +29,6 @@ public class App extends Application {
         window.start();
     }
     public static void main(String[] args) {
-        
-
         launch(args);
     }
 
@@ -48,10 +37,6 @@ public class App extends Application {
         Screen screen = Screen.getPrimary();
 
         bounds = screen.getVisualBounds();
-        saved = false;
-
-        setTitle();
-
         /*
         System.out.println(System.getProperty("user.dir"));
         File file = new File("/src/main/resources/icon.png");
@@ -61,12 +46,7 @@ public class App extends Application {
         Image icon = new Image(App.class.getResourceAsStream("/icon.png"));
         stage.getIcons().add(icon);
 
-        file = null;
-
         window = new Window(stage);
-
-        startScene = new StartScene(stage);
-        mainScene = new MainScene(stage);
     }
 
     public static void reset() {
@@ -74,14 +54,5 @@ public class App extends Application {
         window.start();
     }
 
-    public static void setTitle() {
-        String title;
-        if(file != null) {
-            title = file.getName() + " — " + (saved ? "saved" : " modified");
-        }
-        else {
-            title = "New Tickysheet — modified";
-        }
-        primaryStage.setTitle(title);
-    }
+
 }

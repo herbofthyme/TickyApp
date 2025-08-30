@@ -21,8 +21,11 @@ public class StartScene implements EventHandler<ActionEvent> {
   Stage stage;
   Scene scene;
 
-  public StartScene(Stage stage) {
-    this.stage = stage;
+  Window window;
+
+  public StartScene(Window window) {
+    this.window = window;
+    stage = window.getStage();
 
     setupButtons();
     makeScene();
@@ -36,11 +39,11 @@ public class StartScene implements EventHandler<ActionEvent> {
   public void handle(ActionEvent event) {
 
     if(event.getSource() == newButton) {
-      App.tickyboxing = new TickyBoxing();
+      window.setTicky( new TickyBoxing(window));
     }
 
     if(event.getSource() == uploadButton) {
-      new StateSaver().load(fileChooserDialog());
+      new StateSaver(window).load(fileChooserDialog());
     }
     mainScene();
   }
@@ -70,11 +73,11 @@ public class StartScene implements EventHandler<ActionEvent> {
     fc.getExtensionFilters().add(extension);
     fc.setSelectedExtensionFilter(extension);
     File file = fc.showOpenDialog(stage);
-    App.file = file;
+    window.setFile(file);
     return file;
   }
 
   private void mainScene() {
-    stage.setScene(App.mainScene.scene);
+    stage.setScene(window.getMainScene().scene);
   }
 }

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 public class MainScene {
   Stage stage;
+  Window window;
   Scene scene;
 
   Tab tagsTab, tickyTab, resultsTab;
@@ -28,7 +29,8 @@ public class MainScene {
   TickyTab tickyTabLogic;
   ResultsTab resultsTabLogic;
   
-  public MainScene(Stage stage) {
+  public MainScene(Window window) {
+    this.window = window;
     initialize();
 
     TabPane tabPane = tabs();
@@ -61,12 +63,12 @@ public class MainScene {
       @Override
       public void handle(ActionEvent e) {
         if(e.getSource() == saveButton) {
-          StateSaver saver = new StateSaver(App.tickyboxing.tagSet, App.tickyboxing.prompts);
-          if(App.file == null) {
+          StateSaver saver = new StateSaver(window, window.getTicky().tagSet, window.getTicky().prompts);
+          if(window.getFile() == null) {
             saver.save(fileSaveDialog());
           }
           else {
-            saver.save(App.file);
+            saver.save();
           }
         }
         if(e.getSource() == mainMenuButton) {
@@ -98,7 +100,7 @@ public class MainScene {
     fc.getExtensionFilters().add(extension);
     fc.setSelectedExtensionFilter(extension);
     File file = fc.showSaveDialog(stage);
-    App.file = file;
+    window.setFile(file);
     return file;
   }
 
@@ -127,9 +129,9 @@ public class MainScene {
   }
  
   private void initialize() {
-    tagTabLogic = new AddTagsTab();
-    tickyTabLogic = new TickyTab();   
-    resultsTabLogic = new ResultsTab();
+    tagTabLogic = new AddTagsTab(window);
+    tickyTabLogic = new TickyTab(window);   
+    resultsTabLogic = new ResultsTab(window);
     setupButtons();
 
   };

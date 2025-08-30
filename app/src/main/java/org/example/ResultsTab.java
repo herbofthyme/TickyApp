@@ -27,9 +27,11 @@ public class ResultsTab implements EventHandler<ActionEvent> {
   Button copyButton;
 
   Label outputLabel;
+  TickyBoxing tickyboxing;
 
 
-  public ResultsTab() {
+  public ResultsTab(Window window) {
+    tickyboxing = window.getTicky();
     setupButtons();
     setupListView();
   }
@@ -84,7 +86,7 @@ public class ResultsTab implements EventHandler<ActionEvent> {
 
 
   public void updatePrompts() {
-    promptsView.setItems(FXCollections.observableArrayList(App.tickyboxing.prompts));
+    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.prompts));
   }
 
   private void copy() {

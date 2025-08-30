@@ -12,16 +12,19 @@ public class TickyBoxing {
   TreeSet<String> tagSet;
   ArrayList<Prompt> prompts;
   ObservableList<String> tagsList;
+  Window window;
 
   private static final String NEWLINE = "\n";
 
-  TickyBoxing() {
+  TickyBoxing(Window window) {
+    this.window = window;
     tagSet = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER);
     prompts = new ArrayList<Prompt>();
     tagsList = FXCollections.observableArrayList();
   }
 
-  TickyBoxing(ArrayList<String> tags, ArrayList<Prompt> prompts) {
+  TickyBoxing(Window window, ArrayList<String> tags, ArrayList<Prompt> prompts) {
+    this.window = window;
     tagSet = new TreeSet<String>(String.CASE_INSENSITIVE_ORDER); 
     tagSet.addAll(tags);
     this.prompts = prompts;
@@ -63,8 +66,8 @@ public class TickyBoxing {
 
 
   private void modified() {
-    App.saved = false;
-    App.setTitle();
+    window.setSaved(false);;
+    window.setTitle();
   }
 
 }

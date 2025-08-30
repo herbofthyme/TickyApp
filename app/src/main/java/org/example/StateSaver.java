@@ -13,19 +13,27 @@ public class StateSaver {
   private ArrayList<String> tags;
   private ArrayList<Prompt> prompts;
 
-  StateSaver(TreeSet<String> tagset, ArrayList<Prompt> promptList) {
+  private Window window;
+
+  StateSaver(Window window) { 
+    this.window = window;
+  }
+
+  StateSaver(Window window, TreeSet<String> tagset, ArrayList<Prompt> promptList) {
+    this(window);
     if(tagset != null && promptList != null) {
       tags = new ArrayList<String>(tagset);
       this.prompts = promptList;
     }
   }
-
-  StateSaver() {
+  
+  public void save() {
+    save(window.getFile());
   }
 
   public void save(File file) {
     try {
-      FileWriter writer = new FileWriter(file);
+      FileWriter writer = new FileWriter(window.getFile());
       
       //OutputStream out = new FileOutputStream(file); 
       //Writer writer = new OutputStreamWriter(out,"UTF-8");
@@ -49,8 +57,8 @@ public class StateSaver {
       writer.write(Constants.PROMPT_END + "\n");
       writer.close();
 
-      App.saved = true;
-      App.setTitle();
+      window.setSaved(true);
+      window.setTitle();
     }
     catch (Exception e){
       System.out.println(e.getMessage());
@@ -103,9 +111,9 @@ public class StateSaver {
   public void load(File file)  {
     try {
       read(file);
-      App.tickyboxing = new TickyBoxing(tags, prompts);
-      App.saved = true;
-      App.setTitle();
+      window.setTicky(new TickyBoxing(window, tags, prompts));
+      window.setSaved(true);
+      window.setTitle();
     }
     catch (IOException e) {    }
   }

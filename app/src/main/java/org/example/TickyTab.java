@@ -38,8 +38,11 @@ public class TickyTab {
 
   TextField promptInputArea;
 
+  TickyBoxing tickyboxing;
 
-  public TickyTab() {
+
+  public TickyTab(Window window) {
+    tickyboxing = window.getTicky();
     textFieldSetup();
     setupButtons();
     listViewSetup();
@@ -94,14 +97,14 @@ public class TickyTab {
   }
 
   public void updateLists() {
-    tagsView.setItems(App.tickyboxing.tagsList);
-    promptsView.setItems(FXCollections.observableArrayList(App.tickyboxing.prompts));
+    tagsView.setItems(tickyboxing.tagsList);
+    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.prompts));
   }
   
   private void addPrompt() {
     String input = promptInputArea.getText();
     if(!contains(ILLEGAL_PROMPTS, input)) {
-      App.tickyboxing.addPrompt(input);
+      tickyboxing.addPrompt(input);
       updateLists();
     }
     promptInputArea.clear();
@@ -116,7 +119,7 @@ public class TickyTab {
 
   private void deletePrompt() {
     ObservableList<Prompt> toRemove = promptSelectionModel.getSelectedItems();
-    App.tickyboxing.removePrompts(toRemove);
+    tickyboxing.removePrompts(toRemove);
   }
 
   private void setupButtons() {  
