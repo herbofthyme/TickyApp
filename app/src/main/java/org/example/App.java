@@ -28,7 +28,7 @@ public class App extends Application {
         primaryStage = stage;
         setup(primaryStage);
 
-        primaryWindow.start();
+        //primaryWindow.start();
     }
     public static void main(String[] args) {
         launch(args);
@@ -51,19 +51,15 @@ public class App extends Application {
         primaryWindow = new Window(stage);
     }
 
-    public static void reset() {
-        setup(primaryStage);
-        primaryWindow.start();
-    }
-
-
     public static void newWindow() {
         if(windows == null) {
             windows = new ArrayList<Window>();
             windows.add(primaryWindow);
         }
 
-        windows.add(new Window(new Stage()));
+        Window newWindow = new Window(new Stage());
+        windows.add(newWindow);
+        newWindow.start();
     }
 
 

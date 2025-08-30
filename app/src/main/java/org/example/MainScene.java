@@ -75,7 +75,7 @@ public class MainScene {
           startScene();
         }
         if(e.getSource() == newWindowButton) {
-
+          App.newWindow();
         }
       }
       
@@ -144,6 +144,6 @@ public class MainScene {
   };
 
   private void startScene() {
-    App.reset();
+    window.start();
   }
 }
