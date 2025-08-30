@@ -29,7 +29,7 @@ jlink {
         else {
             imageOptions = listOf("--icon", "src/main/resources/icon.ico")
         }
-        appVersion = "1.1.0"
+        appVersion = "1.2.0"
     }
 }
 
