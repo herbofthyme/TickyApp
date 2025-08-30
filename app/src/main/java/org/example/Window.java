@@ -8,7 +8,7 @@ public class Window {
 
   private Stage stage;
 
-  private TickyBoxing tickyBoxing;
+  public TickyBoxing tickyBoxing;
 
   private StartScene startScene;
   private MainScene mainScene;
@@ -39,6 +39,11 @@ public class Window {
     stage.show();
   }
 
+  public void mainScene() {
+    mainScene = new MainScene(this);
+    stage.setScene(mainScene.scene);
+  }
+
   public void setTitle() {
     String title;
     if(file != null) {
@@ -47,13 +52,11 @@ public class Window {
     else {
         title = "New Tickysheet — modified";
     }
+    System.out.println("tags " + tickyBoxing.getTags().size());
     stage.setTitle(title);
   }
 
   public Stage getStage() {return stage;}
-
-  public TickyBoxing getTicky() {return tickyBoxing;}
-  public void setTicky(TickyBoxing ticky) {tickyBoxing = ticky;}
 
   public MainScene getMainScene() {return mainScene;}
 

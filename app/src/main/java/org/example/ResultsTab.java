@@ -21,17 +21,17 @@ import javafx.scene.text.Font;
 import javafx.util.Callback;
 
 public class ResultsTab implements EventHandler<ActionEvent> {
+  Window window;
 
   ListView<Prompt> promptsView;
 
   Button copyButton;
 
   Label outputLabel;
-  TickyBoxing tickyboxing;
 
 
   public ResultsTab(Window window) {
-    tickyboxing = window.getTicky();
+    this.window = window;
     setupButtons();
     setupListView();
   }
@@ -86,7 +86,7 @@ public class ResultsTab implements EventHandler<ActionEvent> {
 
 
   public void updatePrompts() {
-    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.getPrompts()));
+    promptsView.setItems(FXCollections.observableArrayList(window.tickyBoxing.getPrompts()));
   }
 
   private void copy() {

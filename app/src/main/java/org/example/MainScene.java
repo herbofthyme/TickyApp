@@ -19,7 +19,6 @@ public class MainScene {
   Stage stage;
   Window window;
   Scene scene;
-  TickyBoxing ticky;
 
   Tab tagsTab, tickyTab, resultsTab;
 
@@ -32,7 +31,6 @@ public class MainScene {
   
   public MainScene(Window window) {
     this.window = window;
-    this.ticky = window.getTicky();
     initialize();
 
     TabPane tabPane = tabs();
@@ -65,8 +63,8 @@ public class MainScene {
       @Override
       public void handle(ActionEvent e) {
         if(e.getSource() == saveButton) {
-          System.out.println("tags " + ticky.getTags().size() + " prompts " + ticky.getPrompts().size());
-          StateSaver saver = new StateSaver(window, ticky.getTags(), ticky.getPrompts());
+          System.out.println("tags " + window.tickyBoxing.getTags().size() + " prompts " + window.tickyBoxing.getPrompts().size());
+          StateSaver saver = new StateSaver(window, window.tickyBoxing.getTags(), window.tickyBoxing.getPrompts());
           if(window.getFile() == null) {
             fileSaveDialog();
           }

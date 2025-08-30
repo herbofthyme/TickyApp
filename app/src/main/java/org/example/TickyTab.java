@@ -25,6 +25,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 
 public class TickyTab {
+  Window window;
 
   ListView<String> tagsView; 
   ListView<Prompt> promptsView;
@@ -38,11 +39,9 @@ public class TickyTab {
 
   TextField promptInputArea;
 
-  TickyBoxing tickyboxing;
-
 
   public TickyTab(Window window) {
-    tickyboxing = window.getTicky();
+    this.window = window;
     textFieldSetup();
     setupButtons();
     listViewSetup();
@@ -97,14 +96,14 @@ public class TickyTab {
   }
 
   public void updateLists() {
-    tagsView.setItems(tickyboxing.getObservableList());
-    promptsView.setItems(FXCollections.observableArrayList(tickyboxing.getPrompts()));
+    tagsView.setItems(window.tickyBoxing.getObservableList());
+    promptsView.setItems(FXCollections.observableArrayList(window.tickyBoxing.getPrompts()));
   }
   
   private void addPrompt() {
     String input = promptInputArea.getText();
     if(!contains(ILLEGAL_PROMPTS, input)) {
-      tickyboxing.addPrompt(input);
+      window.tickyBoxing.addPrompt(input);
       updateLists();
     }
     promptInputArea.clear();
@@ -119,7 +118,7 @@ public class TickyTab {
 
   private void deletePrompt() {
     ObservableList<Prompt> toRemove = promptSelectionModel.getSelectedItems();
-    tickyboxing.removePrompts(toRemove);
+    window.tickyBoxing.removePrompts(toRemove);
   }
 
   private void setupButtons() {  

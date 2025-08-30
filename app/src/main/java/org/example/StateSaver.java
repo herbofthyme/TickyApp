@@ -70,20 +70,20 @@ public class StateSaver {
   private void read(File file) throws IOException {
     tags = new ArrayList<String>();
     List<String> lines = Files.readAllLines(file.toPath());
+    System.out.println("reading " + lines.size() + " lines");
 
 
     try {
       tags.addAll(lines.subList(lines.indexOf(Constants.TAGS_START) +1, lines.indexOf(Constants.TAGS_END)-1));
+      System.out.println("added " + tags.size() + " tags");
     }
     catch (IllegalArgumentException e) { System.out.println(e.getMessage());}
-     
     //try {
       boolean gettingTags = false;
       prompts = new ArrayList<Prompt>();
       Prompt prompt = new Prompt("");
       for (int i=lines.indexOf(Constants.PROMPT_START) +1; i<lines.indexOf(Constants.PROMPT_END); i++) {
         String s = lines.get(i);
-        System.out.println(s);
         if(s.equals(Constants.PROMPT_TAGS_START)) {
           gettingTags = true;
           continue;
@@ -109,13 +109,15 @@ public class StateSaver {
     }*/
   }
 
-  public void load(File file)  {
+  public void load()  {
+    File file = window.getFile();
     try {
       read(file);
-      //window.setTicky(new TickyBoxing(window, tags, prompts));
+      window.tickyBoxing = (new TickyBoxing(window, tags, prompts));
       window.setSaved(true);
       window.setTitle();
+      System.out.println("loaded " + tags.size() + " tags");
     }
-    catch (IOException e) {    }
+    catch (IOException e) { System.out.println(e.getMessage());}
   }
 }

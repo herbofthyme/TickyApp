@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class AddTagsTab implements EventHandler<ActionEvent> {
+  Window window;
 
   //ObservableList<String> tagsList;
   ListView<String> tagsView;
@@ -28,13 +29,11 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
   Label tagInputLabel;
 
-  TickyBoxing tickyboxing;
-
 
   MultipleSelectionModel<String> selectionModel;
 
   public AddTagsTab(Window window) {
-    tickyboxing = window.getTicky();
+    this.window = window;
     tagsView = new ListView<String>(FXCollections.observableArrayList());
     setupButtons();
   }
@@ -98,7 +97,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
 
   private void deleteTags() {
     ObservableList<String> toRemove = selectionModel.getSelectedItems();
-    tickyboxing.removeTags(toRemove);
+    window.tickyBoxing.removeTags(toRemove);
   }
 
   @Override
@@ -108,7 +107,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     }
 
     if(event.getSource() == submitButton) {
-      tickyboxing.addTags(input);
+      window.tickyBoxing.addTags(input);
       //tagsList = FXCollections.observableArrayList(App.tickyboxing.tags);
       //tagsView.setItems(tagsList);
       updateTags();
@@ -144,7 +143,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
   }
 
   public void updateTags() {
-    tagsView.setItems(tickyboxing.getObservableList());
+    tagsView.setItems(window.tickyBoxing.getObservableList());
   }
 
   private void setupButtons() {

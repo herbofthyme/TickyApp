@@ -37,15 +37,11 @@ public class StartScene implements EventHandler<ActionEvent> {
 
   @Override
   public void handle(ActionEvent event) {
-
-    if(event.getSource() == newButton) {
-      window.setTicky( new TickyBoxing(window));
-    }
-
     if(event.getSource() == uploadButton) {
-      new StateSaver(window).load(fileChooserDialog());
+      fileChooserDialog();
+      new StateSaver(window).load();
     }
-    mainScene();
+    window.mainScene();
   }
 
   private void setupButtons() {
@@ -66,7 +62,7 @@ public class StartScene implements EventHandler<ActionEvent> {
     scene = new Scene(root);
   }
 
-  private File fileChooserDialog() {
+  private void fileChooserDialog() {
     FileChooser fc = new FileChooser();
     FileChooser.ExtensionFilter extension = new FileChooser.ExtensionFilter("Ticky files", "*.ticky");
     fc.setTitle("Select Tickysheet File");
@@ -74,10 +70,5 @@ public class StartScene implements EventHandler<ActionEvent> {
     fc.setSelectedExtensionFilter(extension);
     File file = fc.showOpenDialog(stage);
     window.setFile(file);
-    return file;
-  }
-
-  private void mainScene() {
-    stage.setScene(window.getMainScene().scene);
   }
 }
