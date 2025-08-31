@@ -125,7 +125,7 @@ public class MainScene {
     resultsTab = new Tab("Results"  , resultsTabLogic.layout());
     resultsTab.setClosable(false);
     resultsTab.setOnSelectionChanged(e -> {
-    resultsTabLogic.updatePrompts();
+    resultsTabLogic.updateLists();
     });
 
     tabPane.getTabs().add(tagsTab);
@@ -145,5 +145,11 @@ public class MainScene {
 
   private void startScene() {
     window.start();
+  }
+
+  public void updateLists() {
+    tickyTabLogic.updateLists();
+    tagTabLogic.updateLists();
+    resultsTabLogic.updateLists();
   }
 }

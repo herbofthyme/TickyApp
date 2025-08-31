@@ -110,13 +110,13 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
       window.tickyBoxing.addTags(input);
       //tagsList = FXCollections.observableArrayList(App.tickyboxing.tags);
       //tagsView.setItems(tagsList);
-      updateTags();
+      updateLists();
       tagInputLabel.setText("");
     }
 
     if(event.getSource() == removeTagsButton) {
       deleteTags();
-      updateTags();
+      updateLists();
     }
   }
   
@@ -142,7 +142,7 @@ public class AddTagsTab implements EventHandler<ActionEvent> {
     tagInputLabel.setText(input);
   }
 
-  public void updateTags() {
+  public void updateLists() {
     tagsView.setItems(window.tickyBoxing.getObservableList());
   }
 

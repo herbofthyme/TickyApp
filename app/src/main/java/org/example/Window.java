@@ -41,6 +41,7 @@ public class Window {
 
   public void mainScene() {
     mainScene = new MainScene(this);
+    mainScene.updateLists();
     stage.setScene(mainScene.scene);
   }
 
