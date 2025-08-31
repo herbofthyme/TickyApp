@@ -35,7 +35,7 @@ public class TickyTab {
   private static final String[] ILLEGAL_PROMPTS = {"", " ", Constants.TAGS_END, Constants.TAGS_START, Constants.PROMPT_END, Constants.PROMPT_START, Constants.PROMPT_TAGS_END, Constants.PROMPT_TAGS_START};
 
 
-  Button submitButton, deleteButton;
+  Button renameButton, duplicateButton, submitButton, deleteButton;
 
   TextField promptInputArea;
 
@@ -84,7 +84,7 @@ public class TickyTab {
     promptInputArea.setPrefWidth(App.bounds.getWidth()/2);
 
 
-    HBox buttons = new HBox(5, submitButton, deleteButton);
+    HBox buttons = new HBox(5, submitButton, renameButton, duplicateButton, deleteButton);
     buttons.setAlignment(Pos.CENTER);
 
     VBox promptsPane = new VBox(10, promptLabel, detailsLabel, promptsView, promptInputArea, buttons);
@@ -109,6 +109,20 @@ public class TickyTab {
     promptInputArea.clear();
   }
 
+  private void renamePrompt() {
+    String input = promptInputArea.getText();
+    if(!contains(ILLEGAL_PROMPTS, input)) {
+      promptSelectionModel.getSelectedItem().changeName(input);
+      updateLists();
+    }
+    promptInputArea.clear();
+  }
+  
+  private void duplicatePrompt() {
+    Prompt p = promptSelectionModel.getSelectedItem();
+    window.tickyBoxing.addPrompt(p.getText());
+  }
+
   private boolean contains(String[] array, String s) {
     for(int i=0; i<array.length; i++){
       if(array[i].equals(s)) {return true;}
@@ -117,29 +131,47 @@ public class TickyTab {
   }
 
   private void deletePrompt() {
-    ObservableList<Prompt> toRemove = promptSelectionModel.getSelectedItems();
-    window.tickyBoxing.removePrompts(toRemove);
+    window.tickyBoxing.removePrompt(promptSelectionModel.getSelectedItem());
   }
 
   private void setupButtons() {  
+    EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent e) {
+        if(e.getSource() == deleteButton) {
+          deletePrompt();
+          updateLists();
+        }
+        if(e.getSource() == submitButton) {
+          addPrompt();
+          updateLists();
+        }
+        if(e.getSource() == renameButton) {
+          renamePrompt();
+          updateLists();
+        }
+        if(e.getSource() == duplicateButton) {
+          duplicatePrompt();
+          updateLists();
+        }
+      }
+      
+    };
     deleteButton = new Button("Remove");
     deleteButton.setFont(Font.font(Constants.FONT_SIZE_2));
-    deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        deletePrompt();
-        updateLists();
-      }
-    });
+    deleteButton.setOnAction(handler);
 
     submitButton = new Button("Submit");
     submitButton.setFont(Font.font(Constants.FONT_SIZE_2));
-    submitButton.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent event) {
-        addPrompt();
-      }
-    });
+    submitButton.setOnAction(handler);
+
+    renameButton = new Button("Rename");
+    renameButton.setFont(Font.font(Constants.FONT_SIZE_2));
+    renameButton.setOnAction(handler);
+
+    duplicateButton = new Button("Duplicate");
+    duplicateButton.setFont(Font.font(Constants.FONT_SIZE_2));
+    duplicateButton.setOnAction(handler);
   }
 
   private void listViewSetup() {
@@ -168,7 +200,7 @@ public class TickyTab {
     promptsView.setOnMouseClicked(new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent event) {
-        Prompt prompt = promptsView.getSelectionModel().getSelectedItem();
+        Prompt prompt = promptSelectionModel.getSelectedItem();
         if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount()==2){
           String tag = tagSelectionModel.getSelectedItem();
           addTagToPrompt(tag, prompt);

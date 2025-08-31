@@ -57,6 +57,10 @@ public class Prompt {
           setText(item == null ? "" : item.getText());
       }
   }
+
+  public void changeName(String s) {
+    text = s;
+  }
   
   public ArrayList<String> getTags() {return tags;}
   public int getCount() {return tagCount;}

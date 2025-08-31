@@ -60,8 +60,8 @@ public class TickyBoxing {
     modified();
   }
 
-  void removePrompts(Collection<Prompt> c) {
-    prompts.removeAll(c);
+  void removePrompt(Prompt p) {
+    prompts.remove(p);
     modified();
   }
 
